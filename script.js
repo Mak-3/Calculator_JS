@@ -7,7 +7,7 @@ const equal = document.querySelector(".equal");
 const clearAll = document.querySelector(".all-clear");
 const clearLast = document.querySelector(".last-entity-clear");
 const buttons = document.querySelectorAll(".button");
-
+const replacex = "*";
 clearLast.addEventListener("click",clearlast);
 clearAll.addEventListener("click",clearall);
 equal.addEventListener("click",evaluate);
@@ -35,6 +35,9 @@ buttons.forEach((button)=>{
         if(e.target.innerText ==="." && (operations.includes(inputs[inputs.length-1]))){
             return;
         }
+        if((inputs.length==0) && (operations.includes(e.target.innerText))){
+            return;
+        }
         inputs.push(e.target.innerText);
         display2_num += e.target.innerText;
         display2.innerText = display2_num;
@@ -53,7 +56,11 @@ function clearlast(){
     display2.innerText = temp;
 }
 function evaluate(){
-    result = eval(display2_num);
+    if(operations.includes(inputs[inputs.length-1])){
+        display2_num="Invalid Input";
+        display2.innerHTML=display2_num;
+    }
+    result = eval(display2_num.replaceAll("x",replacex));
     display1.innerHTML=display2_num;
     display2.innerHTML=result;
     display2_num=result;
